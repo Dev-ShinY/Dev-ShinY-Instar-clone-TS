@@ -1,14 +1,11 @@
-import { SetStateAction, Dispatch, FunctionComponent } from 'react'
+import { FunctionComponent } from 'react'
+import { isLoggendInVar } from './apollo';
 
-interface LoginProps {
-  setIsLoggendIn: Dispatch<SetStateAction<boolean>>;
-}
-
-const Home: FunctionComponent<LoginProps> = ({setIsLoggendIn}: LoginProps) => {
+const Home: FunctionComponent = () => {
   return (
     <div>
       <h1>Home</h1>
-      <button onClick={ ()=> setIsLoggendIn(false)}>LogOut</button>
+      <button onClick={ () => isLoggendInVar(false)}>LogOut</button>
     </div>
   )
 }
