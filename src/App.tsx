@@ -5,10 +5,10 @@ import { darkModeVar, isLoggendInVar } from "./screens/apollo";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import NotFound from "./screens/Notfound";
+import SignUp from "./screens/SignUp";
 import { darkTheme, GlobalStyles, lightTheme } from './screens/styles';
 
 
-export type Color = "fontColor" | "bgColor"
 function App() {
   const isLoggendIn = useReactiveVar( isLoggendInVar );
   const darkMode = useReactiveVar( darkModeVar );
@@ -23,6 +23,12 @@ function App() {
             <Route path="/" element={ <Home/>  } />
           :
             <Route path="/" element={ <Login/>  } />
+          }
+          {
+            !isLoggendIn ? 
+            <Route path="/sign-up" element={ <SignUp />  } />
+            : 
+            null
           }
           <Route path="*" element={ <NotFound />  } />
         </Routes>

@@ -3,19 +3,19 @@ import { reset } from 'styled-reset';
 
 declare module "styled-components" {
     interface DefaultTheme {
-        fontColor: string;
-        bgColor: string;
+        accent: string;
+        borderColor: string;
     }
 }
 
 export const lightTheme = {
-    fontColor: "#2c2c2c",
-    bgColor: "white",
+  accent: '#0095f6',
+  borderColor: 'rgb(219, 219, 219)',
 }
 
 export const darkTheme = {
-    fontColor: "white",
-    bgColor: "#2c2c2c"
+  accent: "",
+  borderColor: ""
 }
 
 
@@ -26,6 +26,7 @@ ${reset};
         background-color: #FAFAFA;
         font-size:14px;
         font-family:'Open Sans', sans-serif;
+        color: rgb(38, 38, 38);
     }
     a {
       text-decoration: none;
