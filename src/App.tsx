@@ -5,6 +5,7 @@ import { darkModeVar, isLoggendInVar } from "./screens/apollo";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import NotFound from "./screens/Notfound";
+import routes from "./screens/routes";
 import SignUp from "./screens/SignUp";
 import { darkTheme, GlobalStyles, lightTheme } from './screens/styles';
 
@@ -20,13 +21,13 @@ function App() {
         <Routes>
           {
             isLoggendIn ? 
-            <Route path="/" element={ <Home/>  } />
+            <Route path={ routes.home } element={ <Home/>  } />
           :
-            <Route path="/" element={ <Login/>  } />
+            <Route path={ routes.home } element={ <Login/>  } />
           }
           {
             !isLoggendIn ? 
-            <Route path="/sign-up" element={ <SignUp />  } />
+            <Route path={ routes.signUp } element={ <SignUp />  } />
             : 
             null
           }
