@@ -3,6 +3,7 @@ import {
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import AuthLayout from "../components/auth/AuthLayout";
 import BottomBox from "../components/auth/BottomBox";
@@ -12,9 +13,21 @@ import Input from "../components/auth/Input";
 import Separator from "../components/auth/Separator";
 import PageTitle from "../components/PageTitle";
 import routes from "./routes";
-import { Helmet } from 'react-helmet-async';
+
+type FormData = {
+  username: String;
+  password: String;
+};
 
 function Login() {
+  const { register, handleSubmit } = useForm<FormData>();
+  const onSubmitValid = (data: any) => {
+    console.log(data);
+  };
+  const onSubmitInvalid = (data: any) => {
+    console.log(data, "invalid");
+  };  
+
   return (
     <AuthLayout>
         <PageTitle title={'Login'}/>
@@ -22,9 +35,9 @@ function Login() {
           <div>
             <FontAwesomeIcon icon={faInstagram} size="3x" />
           </div>
-          <form>
-            <Input type="text" placeholder="Username" />
-            <Input type="password" placeholder="Password" />
+          <form onSubmit={ handleSubmit(onSubmitValid, onSubmitInvalid) }>
+            <Input {...register('username', {required: true, minLength:4})} type="text" placeholder="Username" />
+            <Input {...register('password', {required: true, minLength:4})} type="password" placeholder="Password" />
             <Button type="submit" value="Log in" />
           </form>
           <Separator />
@@ -38,7 +51,6 @@ function Login() {
   );
 }
 export default Login;
-
 const FacebookLogin = styled.div`
   color: #385285;
   span {

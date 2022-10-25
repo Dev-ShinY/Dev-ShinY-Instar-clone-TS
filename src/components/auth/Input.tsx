@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import styled from "styled-components";
 
 interface IInput {
@@ -5,9 +6,9 @@ interface IInput {
   placeholder: string
 }
 
-function Input(props: IInput) {
-    return <SInput {...props}/>
-}
+const Input = forwardRef((props: IInput, ref: any) => {
+  return <SInput ref={ref} {...props} />;
+})
 export default Input;
 
 const SInput = styled.input`
