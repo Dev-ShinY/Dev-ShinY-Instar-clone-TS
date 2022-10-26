@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react'
-import { isLoggendInVar } from './apollo';
+import { isLoggendInVar } from '../apollo';
 
 const Home: FunctionComponent = () => {
   return (
