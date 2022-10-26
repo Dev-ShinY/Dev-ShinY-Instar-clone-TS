@@ -13,6 +13,7 @@ import Input from "../components/auth/Input";
 import Separator from "../components/auth/Separator";
 import PageTitle from "../components/PageTitle";
 import routes from "./routes";
+import FormError from "../components/auth/FormError";
 
 type FormData = {
   username: String;
@@ -20,33 +21,55 @@ type FormData = {
 };
 
 function Login() {
-  const { register, handleSubmit } = useForm<FormData>();
+  const { register, handleSubmit, formState } = useForm<FormData>({
+    mode: "onChange",
+  });
+
   const onSubmitValid = (data: any) => {
     console.log(data);
   };
-  const onSubmitInvalid = (data: any) => {
-    console.log(data, "invalid");
-  };  
-
+  
   return (
     <AuthLayout>
-        <PageTitle title={'Login'}/>
-        <FormBox>
-          <div>
-            <FontAwesomeIcon icon={faInstagram} size="3x" />
-          </div>
-          <form onSubmit={ handleSubmit(onSubmitValid, onSubmitInvalid) }>
-            <Input {...register('username', {required: true, minLength:4})} type="text" placeholder="Username" />
-            <Input {...register('password', {required: true, minLength:4})} type="password" placeholder="Password" />
-            <Button type="submit" value="Log in" />
-          </form>
-          <Separator />
-          <FacebookLogin>
-            <FontAwesomeIcon icon={faFacebookSquare} />
-            <span>Log in with Facebook</span>
-          </FacebookLogin>
-        </FormBox>
-        <BottomBox cta={"Don't have an account?"} link={routes.signUp} linkText={"Sign up"} />
+      <PageTitle title={"Login"} />
+      <FormBox>
+        <div>
+          <FontAwesomeIcon icon={faInstagram} size="3x" />
+        </div>
+        <form onSubmit={handleSubmit(onSubmitValid)}>
+          <Input
+            {...register("username", {
+              required: true,
+              minLength: { value: 5, message: "Username should be longer than 5 chars." },
+            })}
+            type="text"
+            placeholder="Username"
+            hasError={Boolean(formState.errors?.username?.message)}
+          />
+          <FormError message={formState.errors?.username?.message} />
+          <Input
+            {...register("password", {
+              required: true,
+              minLength: { value: 5, message: "Password is required." },
+            })}
+            type="password"
+            placeholder="Password"
+            hasError={Boolean(formState.errors?.username?.message)}
+          />
+          <FormError message={formState.errors?.password?.message} />
+          <Button type="submit" value="Log in" disabled={!formState.isValid} />
+        </form>
+        <Separator />
+        <FacebookLogin>
+          <FontAwesomeIcon icon={faFacebookSquare} />
+          <span>Log in with Facebook</span>
+        </FacebookLogin>
+      </FormBox>
+      <BottomBox
+        cta={"Don't have an account?"}
+        link={routes.signUp}
+        linkText={"Sign up"}
+      />
     </AuthLayout>
   );
 }

@@ -10,7 +10,8 @@ const Button = styled.input`
   text-align: center;
   padding: 8px 0px;
   font-weight: 600;
-  cursor: pointer;
-  `;
+  cursor: ${props => props.disabled ? "default": "pointer"};
+  opacity: ${props => props.disabled ? "0.2": "1"}
+`;
   
-  export default Button;
+export default Button;
