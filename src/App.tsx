@@ -9,7 +9,7 @@ import NotFound from "./screens/Notfound";
 import routes from "./screens/routes";
 import SignUp from "./screens/SignUp";
 import { darkTheme, GlobalStyles, lightTheme } from './screens/styles';
-
+import Layout from "./components/Layout";
 
 function App() {
   const isLoggendIn = useReactiveVar( isLoggedInVar );
@@ -24,7 +24,7 @@ function App() {
         <Routes>
           {
             isLoggendIn ? 
-            <Route path={ routes.home } element={ <Home/>  } />
+            <Route path={ routes.home } element={ <Layout> <Home/> </Layout> } />
           :
             <Route path={ routes.home } element={ <Login/>  } />
           }
