@@ -4,6 +4,7 @@ import styled from "styled-components";
 interface IInput {
   type: string,
   placeholder: string,
+  onFocus: any,
   hasError: boolean
 }
 

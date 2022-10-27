@@ -2,7 +2,7 @@ import { ApolloProvider, useReactiveVar } from "@apollo/client";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { client, darkModeVar, isLoggendInVar } from "./apollo";
+import { client, darkModeVar, isLoggedInVar } from "./apollo";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import NotFound from "./screens/Notfound";
@@ -12,7 +12,7 @@ import { darkTheme, GlobalStyles, lightTheme } from './screens/styles';
 
 
 function App() {
-  const isLoggendIn = useReactiveVar( isLoggendInVar );
+  const isLoggendIn = useReactiveVar( isLoggedInVar );
   const darkMode = useReactiveVar( darkModeVar );
 
   return (

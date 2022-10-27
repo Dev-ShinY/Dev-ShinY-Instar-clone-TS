@@ -1,11 +1,11 @@
 import { FunctionComponent } from 'react'
-import { isLoggendInVar } from '../apollo';
+import { logUserOut } from '../apollo';
 
 const Home: FunctionComponent = () => {
   return (
     <div>
       <h1>Home</h1>
-      <button onClick={ () => isLoggendInVar(false)}>LogOut</button>
+      <button onClick={ () => logUserOut()}>LogOut</button>
     </div>
   )
 }

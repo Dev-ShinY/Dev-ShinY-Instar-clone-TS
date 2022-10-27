@@ -15,6 +15,7 @@ import PageTitle from "../components/PageTitle";
 import routes from "./routes";
 import FormError from "../components/auth/FormError";
 import { gql, useMutation } from "@apollo/client";
+import { logUserIn } from "../apollo";
 
 type FormData = {
   username: String;
@@ -32,7 +33,7 @@ const LOGIN_MUTATION = gql`
 `;
 
 function Login() {
-  const { register, handleSubmit, formState, getValues, setError } = useForm<FormData>({
+  const { register, handleSubmit, formState, getValues, setError, clearErrors } = useForm<FormData>({
     mode: "onChange",
   });
   const onCompleted = (data: any) => {   
@@ -40,9 +41,12 @@ function Login() {
       login: { ok, error, token },
     } = data;
     if (!ok) {
-      setError("username", {
+      return setError("username", {
         message: error,
       });
+    }
+    if (token) {
+      logUserIn(token);
     }
   };
   const [login, { loading }] = useMutation(LOGIN_MUTATION, {
@@ -56,6 +60,10 @@ function Login() {
     login({
       variables: { username, password },
     });
+  };
+
+  const clearLoginError = () => {
+    clearErrors("username");
   };
 
   return (
@@ -74,6 +82,7 @@ function Login() {
                 message: "Username should be longer than 5 chars.",
               },
             })}
+            onFocus={clearLoginError }
             type="text"
             placeholder="Username"
             hasError={Boolean(formState.errors?.username?.message)}
@@ -84,6 +93,7 @@ function Login() {
               required: true,
               minLength: { value: 5, message: "Password is required." },
             })}
+            onFocus={clearLoginError }
             type="password"
             placeholder="Password"
             hasError={Boolean(formState.errors?.username?.message)}

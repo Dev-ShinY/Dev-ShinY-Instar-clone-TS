@@ -24,10 +24,10 @@ function SignUp() {
           </Subtitle>
         </HeaderContainer>
         <form>
-          <Input type="text" placeholder="Name" hasError={false}/>
-          <Input type="text" placeholder="Email" hasError={false}/>
-          <Input type="text" placeholder="Username" hasError={false}/>
-          <Input type="password" placeholder="Password" hasError={false}/>
+          <Input type="text" placeholder="Name" onFocus={null} hasError={false}/>
+          <Input type="text" placeholder="Email" onFocus={null} hasError={false}/>
+          <Input type="text" placeholder="Username" onFocus={null} hasError={false}/>
+          <Input type="password" placeholder="Password" onFocus={null} hasError={false}/>
           <Button type="submit" value="Sign up" />
         </form>
       </FormBox>
