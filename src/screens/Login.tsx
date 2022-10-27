@@ -14,21 +14,50 @@ import Separator from "../components/auth/Separator";
 import PageTitle from "../components/PageTitle";
 import routes from "./routes";
 import FormError from "../components/auth/FormError";
+import { gql, useMutation } from "@apollo/client";
 
 type FormData = {
   username: String;
   password: String;
 };
 
+const LOGIN_MUTATION = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      ok
+      token
+      error
+    }
+  }
+`;
+
 function Login() {
-  const { register, handleSubmit, formState } = useForm<FormData>({
+  const { register, handleSubmit, formState, getValues, setError } = useForm<FormData>({
     mode: "onChange",
   });
-
-  const onSubmitValid = (data: any) => {
-    console.log(data);
+  const onCompleted = (data: any) => {   
+    const {
+      login: { ok, error, token },
+    } = data;
+    if (!ok) {
+      setError("username", {
+        message: error,
+      });
+    }
   };
-  
+  const [login, { loading }] = useMutation(LOGIN_MUTATION, {
+    onCompleted,
+  });
+  const onSubmitValid = (data: any) => {
+    if (loading) {
+      return;
+    }
+    const { username, password } = getValues();
+    login({
+      variables: { username, password },
+    });
+  };
+
   return (
     <AuthLayout>
       <PageTitle title={"Login"} />
@@ -40,7 +69,10 @@ function Login() {
           <Input
             {...register("username", {
               required: true,
-              minLength: { value: 5, message: "Username should be longer than 5 chars." },
+              minLength: {
+                value: 5,
+                message: "Username should be longer than 5 chars.",
+              },
             })}
             type="text"
             placeholder="Username"
@@ -57,7 +89,11 @@ function Login() {
             hasError={Boolean(formState.errors?.username?.message)}
           />
           <FormError message={formState.errors?.password?.message} />
-          <Button type="submit" value="Log in" disabled={!formState.isValid} />
+          <Button
+            type="submit"
+            value={loading ? " Loading..." : "Log in"}
+            disabled={!formState.isValid || loading}
+          />
         </form>
         <Separator />
         <FacebookLogin>

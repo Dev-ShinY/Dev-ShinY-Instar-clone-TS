@@ -8,7 +8,6 @@ interface IInput {
 }
 
 const Input = forwardRef((props: IInput, ref: any) => {
-  console.log(props.hasError)
   return <SInput ref={ref} {...props}/>;
 })
 export default Input;
