@@ -1,17 +1,16 @@
 import styled from "styled-components";
 
-function Avatar({ url = "" }) {
-  return <SAvatar>{url !== "" ? <Img src={url} /> : null}</SAvatar>;
+function Avatar({ url = "", lg = false }) {
+  return <SAvatar lg={lg}>{url !== "" ? <Img src={url} /> : null}</SAvatar>;
 }
 export default Avatar;
 
-const SAvatar = styled.div`
-  width: 25px;
-  height: 25px;
-  border-radius: 15px;
+const SAvatar = styled.div<{ lg: boolean }>`
+  width: ${(props) => (props.lg ? "30px" : "25px")};
+  height: ${(props) => (props.lg ? "30px" : "25px")};
+  border-radius: 50%;
   background-color: #2c2c2c;
   overflow: hidden;
-  margin-left: 20px;
 `;
 
 const Img = styled.img`
