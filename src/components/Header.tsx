@@ -8,11 +8,11 @@ import styled from "styled-components";
 import { isLoggedInVar } from "../apollo";
 import useUser from "../hook/useUser";
 import routes from "../screens/routes";
-import Avatar from './auth/Avatar';
+import Avatar from "./auth/Avatar";
 
 function Header() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
-  const data = useReactiveVar(isLoggedInVar) //{ data } = useUser();
+  const { data } = useUser();
 
   return (
     <SHeader>
@@ -29,16 +29,19 @@ function Header() {
               <Icon>
                 <FontAwesomeIcon icon={faCompass} size="lg" />
               </Icon>
-              {/* {data?.me?.avatar ? <Avatar url={data?.me?.avatar} /> : <Icon> */}
-              {data ? <Avatar url={""} /> : <Icon>
-                <FontAwesomeIcon icon={faUser} size="lg" />
-              </Icon>}
+              {data?.me?.avatar ? (
+                <Avatar url={data?.me?.avatar} />
+              ) : (
+                <Icon>
+                  <FontAwesomeIcon icon={faUser} size="lg" />
+                </Icon>
+              )}
             </IconsContainer>
-          ) : 
+          ) : (
             <Link to={routes.home}>
-                <Button>Login</Button>
+              <Button>Login</Button>
             </Link>
-          }
+          )}
         </Column>
       </Wrapper>
     </SHeader>
@@ -67,8 +70,8 @@ const Wrapper = styled.div`
 const Column = styled.div``;
 
 const IconsContainer = styled.div`
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 `;
 
 const Icon = styled.span`
